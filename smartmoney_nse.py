@@ -183,8 +183,8 @@ def fo_signals_for(eq_date):
     return m[['SYMBOL','OIChgPct','PxChgPct']]
 
 def send_tg(text):
-    token = os.environ.get("TELEGRAM_BOT_TOKEN","" ).strip()
-    chat = os.environ.get("TELEGRAM_CHAT_ID","" ).strip()
+    token = os.environ.get("TELEGRAM_BOT_TOKEN","").strip()
+    chat = os.environ.get("TELEGRAM_CHAT_ID","").strip()
     if not token or not chat:
         print("Telegram creds missing"); return
     try:
