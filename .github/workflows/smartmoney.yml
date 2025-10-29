@@ -1,34 +1,28 @@
 name: NSE SmartMoney Daily
-
 on:
   schedule:
-    - cron: "45 14 * * 1-5"   # 20:15 IST, Mon-Fri
+    - cron: "0 16 * * 1-5"   # 21:30 IST, Mon-Fri
   workflow_dispatch:
-
 jobs:
   run:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
           pip install pandas numpy requests
-
       - name: Telegram ping (pre-check)
         run: |
           curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage \
             -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} \
             -d text="🛰️ Pre-check: GH Actions reached Telegram (NSE SmartMoney)." \
             -d parse_mode=HTML
-
       - name: Run SmartMoney
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
